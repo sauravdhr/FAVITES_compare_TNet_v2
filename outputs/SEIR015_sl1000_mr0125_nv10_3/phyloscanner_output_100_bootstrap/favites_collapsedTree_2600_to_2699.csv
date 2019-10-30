@@ -1,0 +1,15 @@
+unique.split,parent.split,host,parent.host
+327-SPLIT1,unassigned_region-SPLIT1,327,unassigned_region
+644,unassigned_region-SPLIT1,644,unassigned_region
+496-SPLIT1,123,496,123
+48,496-SPLIT1,48,496
+123,644,123,644
+496-SPLIT2,644,496,644
+327-SPLIT2,644,327,644
+496-SPLIT3,unassigned_region-SPLIT1,496,unassigned_region
+559,496-SPLIT3,559,496
+384,496-SPLIT3,384,496
+277,496-SPLIT3,277,496
+547,277,547,277
+651,unassigned_region-SPLIT1,651,unassigned_region
+unassigned_region-SPLIT1,root,unassigned_region,root

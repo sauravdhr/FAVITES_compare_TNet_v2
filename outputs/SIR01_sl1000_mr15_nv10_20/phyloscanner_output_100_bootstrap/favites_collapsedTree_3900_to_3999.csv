@@ -1,0 +1,13 @@
+unique.split,parent.split,host,parent.host
+145-SPLIT1,unassigned_region-SPLIT1,145,unassigned_region
+375,145-SPLIT1,375,145
+0,145-SPLIT1,0,145
+13,145-SPLIT1,13,145
+327,19,327,19
+19,13,19,13
+992,670,992,670
+670,19,670,19
+240,unassigned_region-SPLIT1,240,unassigned_region
+35,240,35,240
+145-SPLIT2,unassigned_region-SPLIT1,145,unassigned_region
+unassigned_region-SPLIT1,root,unassigned_region,root
