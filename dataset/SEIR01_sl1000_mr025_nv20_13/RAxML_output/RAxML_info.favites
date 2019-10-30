@@ -212,3 +212,63 @@ Fast ML optimization finished
 
 Fast ML search Time: 30986.968596 seconds
 
+Slow ML Search 0 Likelihood: -327818.606028
+Slow ML Search 1 Likelihood: -327820.154892
+Slow ML Search 2 Likelihood: -327817.845074
+Slow ML Search 3 Likelihood: -327826.740076
+Slow ML Search 4 Likelihood: -327815.559823
+Slow ML Search 5 Likelihood: -327827.972816
+Slow ML Search 6 Likelihood: -327820.658698
+Slow ML Search 7 Likelihood: -327827.475526
+Slow ML Search 8 Likelihood: -327831.474519
+Slow ML Search 9 Likelihood: -327836.435932
+Slow ML optimization finished
+
+Slow ML search Time: 37887.466665 seconds
+Thorough ML search Time: 1487.465134 seconds
+
+Final ML Optimization Likelihood: -327816.116772
+
+Model Information:
+
+Model Parameters of Partition 0, Name: No Name Provided, Type of Data: DNA
+alpha: 0.260683
+Tree-Length: 914.878914
+rate A <-> C: 5.598019
+rate A <-> G: 11.860457
+rate A <-> T: 3.413172
+rate C <-> G: 0.767656
+rate C <-> T: 13.973918
+rate G <-> T: 1.000000
+
+freq pi(A): 0.187003
+freq pi(C): 0.256522
+freq pi(G): 0.301020
+freq pi(T): 0.255455
+
+
+ML search took 70361.904576 secs or 19.544973 hours
+
+Combined Bootstrap and ML search took 123238.823607 secs or 34.233007 hours
+
+Drawing Bootstrap Support Values on best-scoring ML tree ...
+
+
+
+Found 1 tree in File /data/FAVITES_compare_TNet_v2/dataset/SEIR01_sl1000_mr025_nv20_13/RAxML_output/RAxML_bestTree.favites
+
+
+
+Found 1 tree in File /data/FAVITES_compare_TNet_v2/dataset/SEIR01_sl1000_mr025_nv20_13/RAxML_output/RAxML_bestTree.favites
+
+Program execution info written to /data/FAVITES_compare_TNet_v2/dataset/SEIR01_sl1000_mr025_nv20_13/RAxML_output/RAxML_info.favites
+All 100 bootstrapped trees written to: /data/FAVITES_compare_TNet_v2/dataset/SEIR01_sl1000_mr025_nv20_13/RAxML_output/RAxML_bootstrap.favites
+
+Best-scoring ML tree written to: /data/FAVITES_compare_TNet_v2/dataset/SEIR01_sl1000_mr025_nv20_13/RAxML_output/RAxML_bestTree.favites
+
+Best-scoring ML tree with support values written to: /data/FAVITES_compare_TNet_v2/dataset/SEIR01_sl1000_mr025_nv20_13/RAxML_output/RAxML_bipartitions.favites
+
+Best-scoring ML tree with support values as branch labels written to: /data/FAVITES_compare_TNet_v2/dataset/SEIR01_sl1000_mr025_nv20_13/RAxML_output/RAxML_bipartitionsBranchLabels.favites
+
+Overall execution time for full ML analysis: 123239.132592 secs or 34.233092 hours or 1.426379 days
+
