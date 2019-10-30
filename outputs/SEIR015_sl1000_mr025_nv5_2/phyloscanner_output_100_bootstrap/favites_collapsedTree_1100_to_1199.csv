@@ -1,0 +1,15 @@
+unique.split,parent.split,host,parent.host
+109,unassigned_region-SPLIT1,109,unassigned_region
+483,unassigned_region-SPLIT1,483,unassigned_region
+65-SPLIT1,unassigned_region-SPLIT1,65,unassigned_region
+108,unassigned_region-SPLIT1,108,unassigned_region
+39-SPLIT1,870,39,870
+870,unassigned_region-SPLIT1,870,unassigned_region
+39-SPLIT2,870,39,870
+672,unassigned_region-SPLIT2,672,unassigned_region
+223,unassigned_region-SPLIT2,223,unassigned_region
+473,39-SPLIT2,473,39
+390,39-SPLIT2,390,39
+65-SPLIT2,unassigned_region-SPLIT1,65,unassigned_region
+unassigned_region-SPLIT1,root,unassigned_region,root
+unassigned_region-SPLIT2,39-SPLIT2,unassigned_region,39

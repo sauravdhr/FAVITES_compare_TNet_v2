@@ -1,0 +1,12 @@
+unique.split,parent.split,host,parent.host
+129,unassigned_region-SPLIT1,129,unassigned_region
+424-SPLIT1,unassigned_region-SPLIT1,424,unassigned_region
+405-SPLIT1,424-SPLIT2,405,424
+424-SPLIT2,unassigned_region-SPLIT1,424,unassigned_region
+405-SPLIT2,424-SPLIT2,405,424
+256,424-SPLIT2,256,424
+235,256,235,256
+405-SPLIT3,235,405,235
+971-SPLIT1,256,971,256
+971-SPLIT2,256,971,256
+unassigned_region-SPLIT1,root,unassigned_region,root
