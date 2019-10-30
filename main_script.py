@@ -72,14 +72,92 @@ def run_raxml_with_threading(bootstrap):
 	for i in range(len(t)):
 		t[i].join()
 
+def create_bootstrap_trees():
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+
+	for folder in folders:
+		print('Inside',folder)
+		bootstrap_file = data_dir + folder + '/RAxML_output/RAxML_bootstrap.favites'
+		bootstrap_folder = data_dir + folder + '/RAxML_output/bootstrap_trees'
+		if not os.path.exists(bootstrap_file):
+			continue
+		if not os.path.exists(bootstrap_folder):
+			os.mkdir(bootstrap_folder)
+
+		f = open(bootstrap_file)
+		tree_list = f.readlines()
+
+		for i in range(len(tree_list)):
+			file = open(bootstrap_folder + '/' + str(i) + '.bootstrap.tree', 'w')
+			file.write(tree_list[i])
+
+		# break
+
+def root_bootstrap_trees():
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+
+	for folder in folders:
+		bootstrap_folder = data_dir + folder + '/RAxML_output/bootstrap_trees'
+		rooted_bootstrap_folder = data_dir + folder + '/rooted_bootstrap_trees'
+		bootstrap_trees = next(os.walk(bootstrap_folder))[2]
+		output_folder = os.path.abspath(rooted_bootstrap_folder)
+		if not os.path.exists(output_folder):
+			os.mkdir(output_folder)
+
+		for tree in bootstrap_trees:
+			input_tree = bootstrap_folder + '/' + tree
+			i = int(tree.split('.')[0])
+			cmd = 'raxmlHPC -f I -m GTRGAMMA -t {} -n {} -w {}'.format(input_tree, str(i), output_folder)
+			# print(cmd)
+			os.system(cmd)
+			try:
+				os.remove(output_folder + '/RAxML_info.' + str(i))
+			except:
+				print('RAxML_info does not exist')
+		# break
+
+def create_phyloscanner_input():
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+
+	for folder in folders:
+		print('Inside',folder)
+		input_folder = data_dir + folder + '/rooted_bootstrap_trees'
+		output_folder = data_dir + folder + '/phyloscanner_input'
+		tree_list = next(os.walk(input_folder))[2]
+		if not os.path.exists(output_folder):
+			os.mkdir(output_folder)
+
+		for tree in tree_list:
+			i = int(tree.rstrip().split('.')[1])
+			rooted_tree = input_folder + '/' + tree
+			rename_tree = output_folder + '/bootstrap.InWindow_'+ str(1000+i*100) +'_to_'+ str(1099+i*100) +'.tree'
+			shutil.copy(rooted_tree, rename_tree)
+
+def check_and_clean():
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+	count = 0
+
+	for folder in folders:
+		print('Inside',folder)
+		check_folder = data_dir + folder + '/phyloscanner_input'
+		trees = next(os.walk(check_folder))[2]
+		count += len(trees)
+		print(count)
+
 
 def main():
 	# get_sequences_and_network()
 	# rename_and_clean_sequences()
 	# run_raxml_with_threading(100)
+	# create_bootstrap_trees()
+	# root_bootstrap_trees()
+	# create_phyloscanner_input()
+	check_and_clean()
 
-
-	
 
 
 
