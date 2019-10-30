@@ -153,10 +153,12 @@ def run_phyloscanner(bootstrap = 0):
 
 		if not os.path.exists(output_folder):
 			os.mkdir(output_folder)
+			cmd = 'PhyloScanner/phyloscanner_analyse_trees_old.R {} favites -ct -od {} s,0 --overwrite --tipRegex="^(.*)_(.*)$"'.format(input_file, output_folder)
+			os.system(cmd)
 
-		cmd = 'PhyloScanner/phyloscanner_analyse_trees_old.R {} favites -ct -od {} s,0 --overwrite --tipRegex="^(.*)_(.*)$"'.format(input_file, output_folder)
+		# cmd = 'PhyloScanner/phyloscanner_analyse_trees_old.R {} favites -ct -od {} s,0 --overwrite --tipRegex="^(.*)_(.*)$"'.format(input_file, output_folder)
 		# print(cmd)
-		os.system(cmd)
+		# os.system(cmd)
 
 		# break
 
@@ -166,15 +168,15 @@ def check_and_clean():
 	count = 0
 
 	for folder in folders:
-		print('Inside',folder)
-		check_folder = data_dir + folder + '/phyloscanner_input'
-		trees = next(os.walk(check_folder))[2]
-		count += len(trees)
-		print(count)
+		# print('Inside',folder)
+		# check_folder = data_dir + folder + '/phyloscanner_input'
+
 		# os.mkdir('outputs/' + folder)
-		output_folder = 'outputs/' + folder + '/phyloscanner_output_100_bootstrap'
-		if os.path.exists(output_folder):
-			os.rmdir(output_folder)
+		check_folder = 'outputs/' + folder + '/phyloscanner_output_100_bootstrap'
+		if os.path.exists(check_folder):
+			count += 1
+			# print(folder)
+	print('Done',count)
 
 def main():
 	# get_sequences_and_network()
@@ -183,8 +185,8 @@ def main():
 	# create_bootstrap_trees()
 	# root_bootstrap_trees()
 	# create_phyloscanner_input()
-	run_phyloscanner()
-	# check_and_clean()
+	# run_phyloscanner()
+	check_and_clean()
 
 
 
