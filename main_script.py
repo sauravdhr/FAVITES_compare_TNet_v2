@@ -2,6 +2,7 @@
 
 # Library Imports
 from Bio import SeqIO
+import operator
 import os, shutil, sys
 import threading
 
@@ -162,6 +163,149 @@ def run_phyloscanner(bootstrap = 0):
 
 		# break
 
+def run_tnet_old_multiple_times(input_file, output_file, time = 100):
+	temp_out_file = output_file + '.temp'
+	edge_dict = {}
+	result = open(output_file, 'w+')
+
+	for t in range(time):
+		cmd = 'python3 TNet/tnet_old.py {} {}'.format(input_file, temp_out_file)
+		# print(cmd)
+		os.system(cmd)
+		e_list = []
+		print('Run', t)
+
+		# Read result from temp_out_file and save to edge_dict
+		f = open(temp_out_file)
+		f.readline()
+		for line in f.readlines():
+			parts = line.rstrip().split('\t')
+			edge = parts[0]+'->'+parts[1]
+
+			if edge not in e_list:
+				if edge in edge_dict:
+					edge_dict[edge] += 1
+				else:
+					edge_dict[edge] = 1
+				e_list.append(edge)
+
+		f.close()
+		os.remove(temp_out_file)
+		os.remove(input_file + '.temp')
+		os.remove(input_file + '.tnet.log')
+
+	edge_dict = dict(sorted(edge_dict.items(), key=operator.itemgetter(1),reverse=True))
+	# print(edge_dict)
+
+	for x, y in edge_dict.items():
+		result.write('{}\t{}\n'.format(x, y))
+
+	result.close()
+
+def run_tnet_new_multiple_times(input_file, output_file, time = 100):
+	temp_out_file = output_file + '.temp'
+	edge_dict = {}
+	source_count = {}
+	result = open(output_file, 'w+')
+
+	for t in range(time):
+		cmd = 'python3 TNet/tnet_new.py {} {}'.format(input_file, temp_out_file)
+		# print(cmd)
+		os.system(cmd)
+		e_list = []
+		print('Run', t)
+
+		# Read result from temp_out_file and save to edge_dict
+		f = open(temp_out_file)
+		f.readline()
+		for line in f.readlines():
+			parts = line.rstrip().split('\t')
+			edge = parts[0]+'->'+parts[1]
+
+			if edge not in e_list:
+				if edge in edge_dict:
+					edge_dict[edge] += 1
+				else:
+					edge_dict[edge] = 1
+				e_list.append(edge)
+
+		f.close()
+		os.remove(temp_out_file)
+
+	edge_dict = dict(sorted(edge_dict.items(), key=operator.itemgetter(1),reverse=True))
+	# print(edge_dict)
+
+	for x, y in edge_dict.items():
+		result.write('{}\t{}\n'.format(x, y))
+
+	result.close()
+
+def run_tnet_old(times = 100):
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+
+	for folder in folders:
+		print('Inside',folder)
+		tree_file = data_dir + folder + '/RAxML_rooted_tree.tree'
+		out_file = data_dir + folder + '/tnet_old_' + str(times) + '.tnet'
+		# print(tree_file, out_file, times)
+		run_tnet_old_multiple_times(tree_file, out_file, times)
+		# break
+
+def run_tnet_old_multithreaded(times = 100):
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+	t = []
+
+	for folder in folders:
+		print('Inside',folder)
+		input_dir = data_dir + folder + '/rooted_bootstrap_trees'
+		output_dir = 'outputs/' + folder + '/tnet_old_' + str(times) + '_times'
+		if not os.path.exists(output_dir):
+			os.mkdir(output_dir)
+		tree_list = next(os.walk(input_dir))[2]
+
+		for tree in tree_list:
+			tree_file = input_dir + '/' + tree
+			name = tree.split('.')[1]
+			out_file = output_dir + '/' + name +'.tnet_old'
+			t.append(threading.Thread(target=run_tnet_old_multiple_times, args=(tree_file, out_file, times)))
+			break
+		break
+
+	for i in range(len(t)):
+		t[i].start()
+
+	for i in range(len(t)):
+		t[i].join()
+
+def run_tnet_new_multithreaded(times = 100):
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+	t = []
+
+	for folder in folders:
+		print('Inside',folder)
+		input_dir = data_dir + folder + '/rooted_bootstrap_trees'
+		output_dir = 'outputs/' + folder + '/tnet_new_' + str(times) + '_times'
+		if not os.path.exists(output_dir):
+			os.mkdir(output_dir)
+		tree_list = next(os.walk(input_dir))[2]
+
+		for tree in tree_list:
+			tree_file = input_dir + '/' + tree
+			name = tree.split('.')[1]
+			out_file = output_dir + '/' + name +'.tnet_new'
+			t.append(threading.Thread(target=run_tnet_new_multiple_times, args=(tree_file, out_file, times)))
+			break
+		break
+
+	for i in range(len(t)):
+		t[i].start()
+
+	for i in range(len(t)):
+		t[i].join()
+
 def check_and_clean():
 	data_dir = 'dataset/'
 	folders = next(os.walk(data_dir))[1]
@@ -186,7 +330,9 @@ def main():
 	# root_bootstrap_trees()
 	# create_phyloscanner_input()
 	# run_phyloscanner()
-	check_and_clean()
+	run_tnet_old_multithreaded()
+	run_tnet_new_multithreaded()
+	# check_and_clean()
 
 
 

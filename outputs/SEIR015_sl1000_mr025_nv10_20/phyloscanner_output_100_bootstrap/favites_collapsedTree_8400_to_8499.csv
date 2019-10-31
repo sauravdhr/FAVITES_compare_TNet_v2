@@ -1,0 +1,15 @@
+unique.split,parent.split,host,parent.host
+116-SPLIT1,846,116,846
+846,unassigned_region-SPLIT1,846,unassigned_region
+306,846,306,846
+589,306,589,306
+371,306,371,306
+197,306,197,306
+116-SPLIT2,unassigned_region-SPLIT1,116,unassigned_region
+483,unassigned_region-SPLIT1,483,unassigned_region
+116-SPLIT3,483,116,483
+251,unassigned_region-SPLIT2,251,unassigned_region
+317-SPLIT1,unassigned_region-SPLIT2,317,unassigned_region
+317-SPLIT2,483,317,483
+unassigned_region-SPLIT1,root,unassigned_region,root
+unassigned_region-SPLIT2,483,unassigned_region,483
