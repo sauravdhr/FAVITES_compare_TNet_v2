@@ -7,8 +7,9 @@ def check_progress():
 	total = len(folders)
 
 	for folder in folders:
-		RAxML_bestTree = data_dir + folder + '/RAxML_output/RAxML_bestTree.favites'
-		if os.path.exists(RAxML_bestTree):
+		output_folder = 'outputs/' + folder + '/phyloscanner_output_100_bootstrap/favites_hostRelationshipSummary.csv'
+		# RAxML_bestTree = data_dir + folder + '/RAxML_output/RAxML_bestTree.favites'
+		if os.path.exists(output_folder):
 			count += 1
 		else:
 			print(folder)
