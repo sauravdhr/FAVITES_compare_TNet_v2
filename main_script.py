@@ -318,20 +318,16 @@ def check_and_clean():
 
 	for folder in folders:
 		# print('Inside',folder)
-		check_folder = data_dir + folder + '/rooted_bootstrap_trees'
-		# check_folder = 'outputs/' + folder + '/tnet_old_100_times'
-		files = next(os.walk(check_folder))[2]
-		count += len(files)
-		for file in files:
-			if file[-1].isdigit():
-				input_file = check_folder + '/' + file
-				if os.path.exists(input_file + '.temp'): os.remove(input_file + '.temp')
-				if os.path.exists(input_file + '.tnet.log'): os.remove(input_file + '.tnet.log')
-		# if os.path.exists(check_folder):
-		# 	shutil.rmtree(check_folder)
-		# 	# os.rmdir(check_folder)
-		# 	count += 1
+		check_folder = 'outputs/' + folder + '/phyloscanner_output_100_bootstrap/'
+		if os.path.exists(check_folder):
+			file_list = next(os.walk(check_folder))[2]
+			for file in file_list:
+				# print(file)
+				if file.startswith('favites_collapsedTree'):
+					os.remove(check_folder + file)
+			count += len(file_list)
 			# print(folder)
+		# break
 	print('Done',count)
 
 def main():

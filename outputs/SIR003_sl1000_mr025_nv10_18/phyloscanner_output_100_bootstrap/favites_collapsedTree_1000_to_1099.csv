@@ -1,9 +1,0 @@
-unique.split,parent.split,host,parent.host
-576,unassigned_region-SPLIT1,576,unassigned_region
-259,unassigned_region-SPLIT1,259,unassigned_region
-977,unassigned_region-SPLIT1,977,unassigned_region
-273-SPLIT1,unassigned_region-SPLIT1,273,unassigned_region
-273-SPLIT2,unassigned_region-SPLIT1,273,unassigned_region
-681,273-SPLIT2,681,273
-13,273-SPLIT2,13,273
-unassigned_region-SPLIT1,root,unassigned_region,root
