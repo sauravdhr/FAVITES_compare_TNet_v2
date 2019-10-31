@@ -261,6 +261,8 @@ def run_tnet_old_multithreaded(times = 100):
 		print('Inside',folder)
 		input_dir = data_dir + folder + '/rooted_bootstrap_trees'
 		output_dir = 'outputs/' + folder + '/tnet_old_' + str(times) + '_times'
+		if not os.path.exists('outputs/' + folder):
+			os.mkdir('outputs/' + folder)
 		if not os.path.exists(output_dir):
 			os.mkdir(output_dir)
 		tree_list = next(os.walk(input_dir))[2]
@@ -270,8 +272,6 @@ def run_tnet_old_multithreaded(times = 100):
 			name = tree.split('.')[1]
 			out_file = output_dir + '/' + name +'.tnet_old'
 			t.append(threading.Thread(target=run_tnet_old_multiple_times, args=(tree_file, out_file, times)))
-			break
-		break
 
 	for i in range(len(t)):
 		t[i].start()
@@ -288,6 +288,8 @@ def run_tnet_new_multithreaded(times = 100):
 		print('Inside',folder)
 		input_dir = data_dir + folder + '/rooted_bootstrap_trees'
 		output_dir = 'outputs/' + folder + '/tnet_new_' + str(times) + '_times'
+		if not os.path.exists('outputs/' + folder):
+			os.mkdir('outputs/' + folder)
 		if not os.path.exists(output_dir):
 			os.mkdir(output_dir)
 		tree_list = next(os.walk(input_dir))[2]
@@ -297,8 +299,6 @@ def run_tnet_new_multithreaded(times = 100):
 			name = tree.split('.')[1]
 			out_file = output_dir + '/' + name +'.tnet_new'
 			t.append(threading.Thread(target=run_tnet_new_multiple_times, args=(tree_file, out_file, times)))
-			break
-		break
 
 	for i in range(len(t)):
 		t[i].start()
@@ -313,9 +313,6 @@ def check_and_clean():
 
 	for folder in folders:
 		# print('Inside',folder)
-		# check_folder = data_dir + folder + '/phyloscanner_input'
-
-		# os.mkdir('outputs/' + folder)
 		check_folder = 'outputs/' + folder + '/phyloscanner_output_100_bootstrap/'
 		if os.path.exists(check_folder):
 			file_list = next(os.walk(check_folder))[2]
