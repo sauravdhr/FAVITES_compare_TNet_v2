@@ -1,0 +1,14 @@
+unique.split,parent.split,host,parent.host
+241,15,241,15
+509,241,509,241
+486,15,486,15
+15,unassigned_region-SPLIT1,15,unassigned_region
+179,unassigned_region-SPLIT2,179,unassigned_region
+524,unassigned_region-SPLIT2,524,unassigned_region
+621,15,621,15
+913,unassigned_region-SPLIT1,913,unassigned_region
+407,unassigned_region-SPLIT1,407,unassigned_region
+25,407,25,407
+922,407,922,407
+unassigned_region-SPLIT1,root,unassigned_region,root
+unassigned_region-SPLIT2,15,unassigned_region,15
