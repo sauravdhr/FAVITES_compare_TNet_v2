@@ -270,8 +270,6 @@ def run_tnet_old_multithreaded(times = 100):
 			name = tree.split('.')[1]
 			out_file = output_dir + '/' + name +'.tnet_old'
 			t.append(threading.Thread(target=run_tnet_old_multiple_times, args=(tree_file, out_file, times)))
-			break
-		break
 
 	for i in range(len(t)):
 		t[i].start()
@@ -297,8 +295,6 @@ def run_tnet_new_multithreaded(times = 100):
 			name = tree.split('.')[1]
 			out_file = output_dir + '/' + name +'.tnet_new'
 			t.append(threading.Thread(target=run_tnet_new_multiple_times, args=(tree_file, out_file, times)))
-			break
-		break
 
 	for i in range(len(t)):
 		t[i].start()
