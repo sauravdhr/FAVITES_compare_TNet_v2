@@ -313,12 +313,19 @@ def check_and_clean():
 
 	for folder in folders:
 		# print('Inside',folder)
-		# check_folder = data_dir + folder + '/phyloscanner_input'
-
-		# os.mkdir('outputs/' + folder)
-		check_folder = 'outputs/' + folder + '/phyloscanner_output_100_bootstrap'
-		if os.path.exists(check_folder):
-			count += 1
+		check_folder = data_dir + folder + '/rooted_bootstrap_trees'
+		# check_folder = 'outputs/' + folder + '/tnet_old_100_times'
+		files = next(os.walk(check_folder))[2]
+		count += len(files)
+		for file in files:
+			if file[-1].isdigit():
+				input_file = check_folder + '/' + file
+				if os.path.exists(input_file + '.temp'): os.remove(input_file + '.temp')
+				if os.path.exists(input_file + '.tnet.log'): os.remove(input_file + '.tnet.log')
+		# if os.path.exists(check_folder):
+		# 	shutil.rmtree(check_folder)
+		# 	# os.rmdir(check_folder)
+		# 	count += 1
 			# print(folder)
 	print('Done',count)
 
@@ -330,9 +337,9 @@ def main():
 	# root_bootstrap_trees()
 	# create_phyloscanner_input()
 	# run_phyloscanner()
-	run_tnet_old_multithreaded()
-	run_tnet_new_multithreaded()
-	# check_and_clean()
+	# run_tnet_old_multithreaded()
+	# run_tnet_new_multithreaded()
+	check_and_clean()
 
 
 
