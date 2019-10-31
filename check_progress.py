@@ -7,13 +7,15 @@ def check_progress():
 	total = len(folders)
 
 	for folder in folders:
-		RAxML_bestTree = data_dir + folder + '/RAxML_output/RAxML_bestTree.favites'
-		if os.path.exists(RAxML_bestTree):
-			count += 1
-		else:
-			print(folder)
+		check_folder = 'outputs/' + folder + '/tnet_new_100_times/'
+		# RAxML_bestTree = data_dir + folder + '/RAxML_output/RAxML_bestTree.favites'
+		if os.path.exists(check_folder):
+			file_list = next(os.walk(check_folder))[2]
+			count += len(file_list)
+		# else:
+		# 	print(folder)
 
-	print('Progress:', count, 'out of', total)
+	print('Progress:', count, 'out of', total*100)
 
 
 def main():
