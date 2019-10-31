@@ -261,6 +261,8 @@ def run_tnet_old_multithreaded(times = 100):
 		print('Inside',folder)
 		input_dir = data_dir + folder + '/rooted_bootstrap_trees'
 		output_dir = 'outputs/' + folder + '/tnet_old_' + str(times) + '_times'
+		if not os.path.exists('outputs/' + folder):
+			os.mkdir('outputs/' + folder)
 		if not os.path.exists(output_dir):
 			os.mkdir(output_dir)
 		tree_list = next(os.walk(input_dir))[2]
@@ -286,6 +288,8 @@ def run_tnet_new_multithreaded(times = 100):
 		print('Inside',folder)
 		input_dir = data_dir + folder + '/rooted_bootstrap_trees'
 		output_dir = 'outputs/' + folder + '/tnet_new_' + str(times) + '_times'
+		if not os.path.exists('outputs/' + folder):
+			os.mkdir('outputs/' + folder)
 		if not os.path.exists(output_dir):
 			os.mkdir(output_dir)
 		tree_list = next(os.walk(input_dir))[2]
