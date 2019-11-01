@@ -330,12 +330,14 @@ def check_and_clean():
 
 	for folder in folders:
 		# print('Inside',folder)
-		check_folder = 'outputs/' + folder + '/phyloscanner_output_100_bootstrap/'
+		check_folder = 'outputs/' + folder + '/phyloscanner_output_10_bootstrap/'
 		if os.path.exists(check_folder):
 			file_list = next(os.walk(check_folder))[2]
 			for file in file_list:
 				# print(file)
 				if file.startswith('favites_collapsedTree'):
+					os.remove(check_folder + file)
+				if file.endswith('pdf'):
 					os.remove(check_folder + file)
 			count += len(file_list)
 			# print(folder)
@@ -349,11 +351,11 @@ def main():
 	# create_bootstrap_trees()
 	# root_bootstrap_trees()
 	# create_phyloscanner_input()
-	create_phyloscanner_input_with_tree_size(50)
+	# create_phyloscanner_input_with_tree_size(50)
 	# run_phyloscanner(10)
 	# run_tnet_old_multithreaded()
 	# run_tnet_new_multithreaded()
-	# check_and_clean()
+	check_and_clean()
 
 
 
