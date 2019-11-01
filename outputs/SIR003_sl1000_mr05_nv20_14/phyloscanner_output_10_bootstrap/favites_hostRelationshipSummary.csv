@@ -1,0 +1,14 @@
+host.1,host.2,ancestry,ancestry.tree.count,both.exist,fraction,any.relationship.tree.count
+170,221,complex,3,10,3/10,10
+175,221,none,10,10,10/10,10
+175,514,complex,2,10,2/10,10
+175,514,trans,8,10,8/10,10
+175,551,trans,10,10,10/10,10
+221,155,trans,10,10,10/10,10
+221,170,trans,7,10,7/10,10
+221,277,complex,2,10,2/10,10
+221,277,trans,8,10,8/10,10
+221,749,trans,10,10,10/10,10
+221,88,trans,10,10,10/10,10
+749,334,trans,10,10,10/10,10
+88,537,trans,10,10,10/10,10
