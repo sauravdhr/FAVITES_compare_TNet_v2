@@ -352,10 +352,10 @@ def main():
 	# root_bootstrap_trees()
 	# create_phyloscanner_input()
 	# create_phyloscanner_input_with_tree_size(50)
-	# run_phyloscanner(10)
+	run_phyloscanner(50)
 	# run_tnet_old_multithreaded()
 	# run_tnet_new_multithreaded()
-	check_and_clean()
+	# check_and_clean()
 
 
 
