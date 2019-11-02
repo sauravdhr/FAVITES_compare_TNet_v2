@@ -137,24 +137,41 @@ def create_phyloscanner_input():
 			rename_tree = output_folder + '/bootstrap.InWindow_'+ str(1000+i*100) +'_to_'+ str(1099+i*100) +'.tree'
 			shutil.copy(rooted_tree, rename_tree)
 
-def run_phyloscanner(bootstrap = 0):
+def create_phyloscanner_input_with_tree_size(size):
 	data_dir = 'dataset/'
 	folders = next(os.walk(data_dir))[1]
 
 	for folder in folders:
 		print('Inside',folder)
 		input_folder = data_dir + folder + '/phyloscanner_input'
+		output_folder = data_dir + folder + '/phyloscanner_input_' + str(size)
+		tree_list = next(os.walk(input_folder))[2]
+		if not os.path.exists(output_folder):
+			os.mkdir(output_folder)
+
+		for i in range(size):
+			rooted_tree = input_folder + '/' + tree_list[i]
+			rename_tree = output_folder + '/' + tree_list[i]
+			shutil.copy(rooted_tree, rename_tree)
+
+def run_phyloscanner(bootstrap = 0):
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+
+	for folder in folders:
+		print('Inside',folder)
 		if bootstrap == 0:
+			input_folder = data_dir + folder + '/phyloscanner_input'
 			output_folder = 'outputs/' + folder + '/phyloscanner_output_100_bootstrap'
 			input_file = input_folder + '/bootstrap.InWindow_'
 		else:
+			input_folder = data_dir + folder + '/phyloscanner_input_' + str(bootstrap)
 			output_folder = 'outputs/' + folder + '/phyloscanner_output_' + str(bootstrap) + '_bootstrap'
 			input_file = input_folder + '/bootstrap.InWindow_'
-			print('Complete the input_file code')
 
 		if not os.path.exists(output_folder):
 			os.mkdir(output_folder)
-			cmd = 'PhyloScanner/phyloscanner_analyse_trees_old.R {} favites -ct -od {} s,0 --overwrite --tipRegex="^(.*)_(.*)$"'.format(input_file, output_folder)
+			cmd = 'PhyloScanner/phyloscanner_analyse_trees_old.R {} favites -od {} s,0 --overwrite --tipRegex="^(.*)_(.*)$"'.format(input_file, output_folder)
 			os.system(cmd)
 
 		# cmd = 'PhyloScanner/phyloscanner_analyse_trees_old.R {} favites -ct -od {} s,0 --overwrite --tipRegex="^(.*)_(.*)$"'.format(input_file, output_folder)
@@ -318,12 +335,14 @@ def check_and_clean():
 
 	for folder in folders:
 		# print('Inside',folder)
-		check_folder = 'outputs/' + folder + '/phyloscanner_output_100_bootstrap/'
+		check_folder = 'outputs/' + folder + '/phyloscanner_output_10_bootstrap/'
 		if os.path.exists(check_folder):
 			file_list = next(os.walk(check_folder))[2]
 			for file in file_list:
 				# print(file)
 				if file.startswith('favites_collapsedTree'):
+					os.remove(check_folder + file)
+				if file.endswith('pdf'):
 					os.remove(check_folder + file)
 			count += len(file_list)
 			# print(folder)
@@ -337,7 +356,8 @@ def main():
 	# create_bootstrap_trees()
 	# root_bootstrap_trees()
 	# create_phyloscanner_input()
-	# run_phyloscanner()
+	# create_phyloscanner_input_with_tree_size(50)
+	# run_phyloscanner(10)
 	# run_tnet_old_multithreaded()
 	# run_tnet_new_multithreaded()
 	check_and_clean()
