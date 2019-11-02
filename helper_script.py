@@ -4,6 +4,7 @@
 from Bio import SeqIO
 import os, shutil, sys
 import threading
+import main_script as ms
 
 def run_script(folder, script):
 	cmd = './' + folder +'/'+ script
@@ -81,17 +82,40 @@ def root_raxml_best_tree():
 	for folder in folders:
 		print('Inside :', folder)
 		best_tree = data_dir + folder + '/RAxML_output/RAxML_bestTree.favites'
-		output_folder = data_dir + folder + '/RAxML_output'
+		output_folder = os.path.abspath(data_dir + folder + '/RAxML_output')
 		cmd = 'raxmlHPC -f I -m GTRGAMMA -t {} -n bestTree.favites -w {}'.format(best_tree, output_folder)
 		os.system(cmd)
-		break
+
+def run_tnet_new_besttree_multithreaded(times = 100):
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+	t = []
+
+	for folder in folders:
+		print('Inside',folder)
+		input_dir = data_dir + folder + '/RAxML_output'
+		output_dir = 'outputs/' + folder + '/tnet_best_tree/'
+		if not os.path.exists(output_dir):
+			os.mkdir(output_dir)
+
+		tree_file = input_dir + '/RAxML_rootedTree.bestTree.favites'
+		out_file = output_dir + '/bestTree.' + str(times) +'.tnet_new'
+		t.append(threading.Thread(target=ms.run_tnet_new_multiple_times, args=(tree_file, out_file, times)))
+
+	for i in range(len(t)):
+		t[i].start()
+
+	for i in range(len(t)):
+		t[i].join()
 
 def main():
 	# get_sequences_and_network()
 	# rename_and_clean_sequences()
 	# create_raxml_scripts_with_bootstrap(100, 'raxml_scripts')
 	# run_raxml_scripts_with_threading('raxml_scripts')
-	root_raxml_best_tree()
+	# root_raxml_best_tree()
+	run_tnet_new_besttree_multithreaded()
+
 	
 
 

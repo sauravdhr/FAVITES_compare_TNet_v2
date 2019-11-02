@@ -9,12 +9,14 @@ def check_progress():
 	for folder in folders:
 		check_folder = 'outputs/' + folder + '/phyloscanner_output_50_bootstrap/favites_hostRelationshipSummary.csv'
 		# RAxML_bestTree = data_dir + folder + '/RAxML_output/RAxML_bestTree.favites'
+		# check_folder = 'outputs/' + folder + '/tnet_best_tree/bestTree.100.tnet_new'
+		# check_folder = data_dir + folder + '/RAxML_output/'
 		if os.path.exists(check_folder):
 			# file_list = next(os.walk(check_folder))[2]
-			# count += len(file_list)
 			count += 1
-		else:
-			print(folder)
+			# count += len(file_list)
+		# else:
+		# 	print(folder)
 
 	print('Progress:', count, 'out of', total)
 
