@@ -339,8 +339,8 @@ def main():
 	# create_phyloscanner_input()
 	# run_phyloscanner()
 	# run_tnet_old_multithreaded()
-	run_tnet_new_multithreaded()
-	# check_and_clean()
+	# run_tnet_new_multithreaded()
+	check_and_clean()
 
 
 

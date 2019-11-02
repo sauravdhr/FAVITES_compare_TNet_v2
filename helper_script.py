@@ -74,12 +74,19 @@ def run_raxml_without_scripts_threading(bootstrap):
 	for i in range(len(t)):
 		t[i].join()
 
+def root_raxml_best_tree():
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+
+	for folder in folders:
+
 
 def main():
 	# get_sequences_and_network()
 	# rename_and_clean_sequences()
 	# create_raxml_scripts_with_bootstrap(100, 'raxml_scripts')
 	# run_raxml_scripts_with_threading('raxml_scripts')
+	root_raxml_best_tree()
 	
 
 

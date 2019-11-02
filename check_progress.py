@@ -12,6 +12,7 @@ def check_progress():
 		if os.path.exists(check_folder):
 			file_list = next(os.walk(check_folder))[2]
 			count += len(file_list)
+			# count += 1
 		# else:
 		# 	print(folder)
 
