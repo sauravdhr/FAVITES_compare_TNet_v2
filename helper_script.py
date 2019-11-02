@@ -81,10 +81,9 @@ def root_raxml_best_tree():
 	for folder in folders:
 		print('Inside :', folder)
 		best_tree = data_dir + folder + '/RAxML_output/RAxML_bestTree.favites'
-		output_folder = data_dir + folder + '/RAxML_output'
+		output_folder = os.path.abspath(data_dir + folder + '/RAxML_output')
 		cmd = 'raxmlHPC -f I -m GTRGAMMA -t {} -n bestTree.favites -w {}'.format(best_tree, output_folder)
 		os.system(cmd)
-		break
 
 
 def main():
