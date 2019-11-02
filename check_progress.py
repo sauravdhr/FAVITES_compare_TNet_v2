@@ -7,10 +7,11 @@ def check_progress():
 	total = len(folders)
 
 	for folder in folders:
-		# check_folder = 'outputs/' + folder + '/phyloscanner_output_100_bootstrap/'
+		# check_folder = 'outputs/' + folder + '/tnet_best_tree/bestTree.100.tnet_new'
 		check_folder = data_dir + folder + '/RAxML_output/'
 		if os.path.exists(check_folder):
 			file_list = next(os.walk(check_folder))[2]
+			# count += 1
 			count += len(file_list)
 		# else:
 		# 	print(folder)
