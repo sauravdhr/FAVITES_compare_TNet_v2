@@ -1,0 +1,10 @@
+unique.split,parent.split,host,parent.host
+252,unassigned_region-SPLIT1,252,unassigned_region
+592,unassigned_region-SPLIT1,592,unassigned_region
+187,592,187,592
+299,187,299,187
+656,187,656,187
+280,656,280,656
+128,unassigned_region-SPLIT1,128,unassigned_region
+719,unassigned_region-SPLIT1,719,unassigned_region
+unassigned_region-SPLIT1,root,unassigned_region,root
