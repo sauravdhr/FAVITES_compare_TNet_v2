@@ -108,13 +108,30 @@ def run_tnet_new_besttree_multithreaded(times = 100):
 	for i in range(len(t)):
 		t[i].join()
 
+def run_tnet_old_besttree(times = 100):
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+
+	for folder in folders:
+		print('Inside',folder)
+		input_dir = data_dir + folder + '/RAxML_output'
+		output_dir = 'outputs/' + folder + '/tnet_best_tree/'
+		if not os.path.exists(output_dir):
+			os.mkdir(output_dir)
+
+		tree_file = input_dir + '/RAxML_rootedTree.bestTree.favites'
+		out_file = output_dir + '/bestTree.' + str(times) +'.tnet_old'
+		ms.run_tnet_old_multiple_times(tree_file, out_file, times)
+
+
 def main():
 	# get_sequences_and_network()
 	# rename_and_clean_sequences()
 	# create_raxml_scripts_with_bootstrap(100, 'raxml_scripts')
 	# run_raxml_scripts_with_threading('raxml_scripts')
 	# root_raxml_best_tree()
-	run_tnet_new_besttree_multithreaded()
+	# run_tnet_new_besttree_multithreaded()
+	run_tnet_old_besttree()
 
 	
 

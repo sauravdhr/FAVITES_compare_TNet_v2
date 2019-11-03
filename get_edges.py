@@ -84,7 +84,7 @@ def get_mul_tnet_edges(tnet_file, cutoff):
 	f = open(tnet_file)
 	for line in f.readlines():
 		parts = line.rstrip().split('\t')
-		if int(parts[1]) > cutoff:
+		if int(parts[1]) >= cutoff:
 			tnet_edges.append(parts[0])
 		# print('M',parts)
 
