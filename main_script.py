@@ -360,7 +360,7 @@ def check_and_clean():
 
 	for folder in folders:
 		# print('Inside',folder)
-		check_folder = 'outputs/' + folder + '/phyloscanner_output_10_bootstrap/'
+		check_folder = 'outputs/' + folder + '/phyloscanner_output_50_bootstrap/'
 		if os.path.exists(check_folder):
 			file_list = next(os.walk(check_folder))[2]
 			for file in file_list:
@@ -385,8 +385,8 @@ def main():
 	# run_phyloscanner(50)
 	# run_tnet_old_multithreaded()
 	# run_tnet_new_multithreaded()
-	create_tnet_bootstrap_output(50)
-	# check_and_clean()
+	# create_tnet_bootstrap_output(50)
+	check_and_clean()
 
 
 
