@@ -23,7 +23,7 @@ def check_progress():
 		# 	print(folder)
 		# break
 
-	print('Progress:', count, 'out of', total*2)
+	print('Progress:', count, 'out of', total*100)
 
 
 def main():
