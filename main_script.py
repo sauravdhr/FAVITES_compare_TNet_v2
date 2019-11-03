@@ -180,6 +180,38 @@ def run_phyloscanner(bootstrap = 0):
 
 		# break
 
+def cmd_phyloscanner(input_file, output_folder):
+	cmd = 'PhyloScanner/phyloscanner_analyse_trees_old.R {} favites -od {} s,0 --overwrite --tipRegex="^(.*)_(.*)$"'.format(input_file, output_folder)
+	print(cmd)
+	# os.system(cmd)
+
+def run_phyloscanner_multithreaded(bootstrap = 100):
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+	t = []
+
+	for folder in folders:
+		if bootstrap == 100:
+			input_folder = data_dir + folder + '/phyloscanner_input'
+			output_folder = 'outputs/' + folder + '/phyloscanner_output_100_bootstrap'
+			input_file = input_folder + '/bootstrap.InWindow_'
+		else:
+			input_folder = data_dir + folder + '/phyloscanner_input_' + str(bootstrap)
+			output_folder = 'outputs/' + folder + '/phyloscanner_output_' + str(bootstrap) + '_bootstrap'
+			input_file = input_folder + '/bootstrap.InWindow_'
+
+		if not os.path.exists(output_folder):
+			print('Inside',folder)
+			os.mkdir(output_folder)
+			t.append(threading.Thread(target=cmd_phyloscanner, args=(input_file, output_folder)))
+
+	print('len_t', len(t))
+	for i in range(len(t)):
+		t[i].start()
+
+	for i in range(len(t)):
+		t[i].join()
+
 def run_tnet_old_multiple_times(input_file, output_file, time = 100):
 	temp_out_file = output_file + '.temp'
 	edge_dict = {}
@@ -357,7 +389,8 @@ def main():
 	# root_bootstrap_trees()
 	# create_phyloscanner_input()
 	# create_phyloscanner_input_with_tree_size(50)
-	run_phyloscanner(50)
+	# run_phyloscanner(50)
+	run_phyloscanner_multithreaded(50)
 	# run_tnet_old_multithreaded()
 	# run_tnet_new_multithreaded()
 	# check_and_clean()

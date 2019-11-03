@@ -17,7 +17,7 @@ def check_progress():
 			count += 1
 			if not os.path.exists(check_file):
 				print(folder)
-				# shutil.remove(check_folder)
+				os.rmdir(check_folder)
 			# count += len(file_list)
 		# else:
 		# 	print(folder)
