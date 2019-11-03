@@ -2,6 +2,7 @@
 
 # Library Imports
 from Bio import SeqIO
+import get_edges as ge
 import operator
 import os, shutil, sys
 import threading
@@ -384,6 +385,33 @@ def create_tnet_bootstrap_output(bootstrap):
 				print(source_file, copy_file)
 				shutil.copy(source_file, copy_file)
 
+def create_directed_tnet_bootstrap_summary(tree_folder, threshold):
+	data_dir = 'outputs/'
+	folders = next(os.walk(data_dir))[1]
+
+	for folder in folders:
+		print('Inside',folder)
+		edge_dict = {}
+		bootstrap_folder = data_dir + folder + '/' + tree_folder
+		output_folder = data_dir + folder + '/tnet_new_bootstrap_summary_directed/'
+		if not os.path.exists(output_folder):
+			os.mkdir(output_folder)
+
+		result = open(output_folder + tree_folder + '_th_' + str(threshold) + '_summary.csv', 'w+')
+		file_list = next(os.walk(bootstrap_folder))[2]
+
+		for file in file_list:
+			tnet_file = bootstrap_folder + '/' + file
+			tnet_edges = ge.get_mul_tnet_edges(tnet_file, threshold)
+			for edge in tnet_edges:
+				if edge in edge_dict:
+					edge_dict[edge] += 1
+				else:
+					edge_dict[edge] = 1
+
+		edge_dict = dict(sorted(edge_dict.items(), key=operator.itemgetter(1),reverse=True))
+		for x, y in edge_dict.items():
+			result.write('{},{}\n'.format(x, y))
 
 def check_and_clean():
 	data_dir = 'dataset/'
@@ -419,7 +447,8 @@ def main():
 	# run_tnet_old_multithreaded()
 	# run_tnet_new_multithreaded()
 	# create_tnet_bootstrap_output(50)
-	check_and_clean()
+	create_directed_tnet_bootstrap_summary('tnet_new_10_bootstrap', 100)
+	# check_and_clean()
 
 
 
