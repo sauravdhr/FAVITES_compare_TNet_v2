@@ -123,6 +123,20 @@ def run_tnet_old_besttree(times = 100):
 		out_file = output_dir + '/bestTree.' + str(times) +'.tnet_old'
 		ms.run_tnet_old_multiple_times(tree_file, out_file, times)
 
+def run_phyloscanner_besttree():
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+
+	for folder in folders:
+		print('Inside',folder)
+		input_folder = data_dir + folder + '/RAxML_output'
+		output_folder = 'outputs/' + folder + '/phyloscanner_best_tree'
+		input_file = input_folder + '/RAxML_rootedTree.bestTree.favites'
+
+		if not os.path.exists(output_folder):
+			os.mkdir(output_folder)
+			cmd = 'PhyloScanner/phyloscanner_analyse_trees_old.R {} favites -ct -od {} s,0 --overwrite --tipRegex="^(.*)_(.*)$"'.format(input_file, output_folder)
+			os.system(cmd)
 
 def main():
 	# get_sequences_and_network()
@@ -131,7 +145,8 @@ def main():
 	# run_raxml_scripts_with_threading('raxml_scripts')
 	# root_raxml_best_tree()
 	# run_tnet_new_besttree_multithreaded()
-	run_tnet_old_besttree()
+	# run_tnet_old_besttree()
+	run_phyloscanner_besttree()
 
 	
 
