@@ -328,6 +328,31 @@ def run_tnet_new_multithreaded(times = 100):
 
 		run_tnet_new_single_folder(input_dir, output_dir, times)
 
+def create_tnet_bootstrap_output(bootstrap):
+	data_dir = 'dataset/'
+	folders = next(os.walk(data_dir))[1]
+
+	for folder in folders:
+		print('Inside',folder)
+		phylo_bootstrap_folder = data_dir + folder + '/phyloscanner_input_' + str(bootstrap)
+		if not os.path.exists(phylo_bootstrap_folder):
+			print('Invalid bootstrap value')
+			return
+
+		input_folder = 'outputs/' + folder + '/tnet_new_100_times/'
+		output_folder = 'outputs/' + folder + '/tnet_new_' + str(bootstrap) + '_bootstrap'
+		file_list = next(os.walk(phylo_bootstrap_folder))[2]
+		if not os.path.exists(output_folder):
+			os.mkdir(output_folder)
+			for file in file_list:
+				window = int(file.split('_')[1])
+				index = (window - 1000)//100
+				source_file = input_folder + str(index) + '.tnet_new'
+				copy_file = output_folder + '/' + str(index) + '.tnet_new'
+				print(source_file, copy_file)
+				shutil.copy(source_file, copy_file)
+
+
 def check_and_clean():
 	data_dir = 'dataset/'
 	folders = next(os.walk(data_dir))[1]
@@ -357,9 +382,10 @@ def main():
 	# root_bootstrap_trees()
 	# create_phyloscanner_input()
 	# create_phyloscanner_input_with_tree_size(50)
-	run_phyloscanner(50)
+	# run_phyloscanner(50)
 	# run_tnet_old_multithreaded()
 	# run_tnet_new_multithreaded()
+	create_tnet_bootstrap_output(50)
 	# check_and_clean()
 
 
