@@ -353,13 +353,12 @@ def run_tnet_new_multithreaded(times = 100):
 	for folder in folders:
 		print('Inside',folder)
 		input_dir = data_dir + folder + '/rooted_bootstrap_trees'
-		output_dir = 'outputs/' + folder + '/tnet_new_' + str(times) + '_times'
+		output_dir = 'outputs/' + folder + '/tnet_new_' + str(times) + '_bootstrap'
 		if not os.path.exists('outputs/' + folder):
 			os.mkdir('outputs/' + folder)
 		if not os.path.exists(output_dir):
 			os.mkdir(output_dir)
-
-		run_tnet_new_single_folder(input_dir, output_dir, times)
+			run_tnet_new_single_folder(input_dir, output_dir, times)
 
 def create_tnet_bootstrap_output(bootstrap):
 	data_dir = 'dataset/'
@@ -420,18 +419,17 @@ def check_and_clean():
 
 	for folder in folders:
 		# print('Inside',folder)
-		check_folder = 'outputs/' + folder + '/phyloscanner_output_50_bootstrap/'
+		check_folder = 'outputs/' + folder + '/tnet_new_100_bootstrap/'
 		if os.path.exists(check_folder):
 			file_list = next(os.walk(check_folder))[2]
-			for file in file_list:
-				# print(file)
-				if file.startswith('favites_collapsedTree'):
-					os.remove(check_folder + file)
-				if file.endswith('pdf'):
-					os.remove(check_folder + file)
-			count += len(file_list)
-			# print(folder)
-		# break
+			check_file = check_folder + file_list[0]
+			if os.stat(check_file).st_size == 0:
+				print(folder)
+				shutil.rmtree('outputs/' + folder + '/tnet_new_100_bootstrap')
+				shutil.rmtree('outputs/' + folder + '/tnet_new_50_bootstrap')
+				shutil.rmtree('outputs/' + folder + '/tnet_new_10_bootstrap')
+				shutil.rmtree('outputs/' + folder + '/tnet_new_bootstrap_summary_directed')
+				# break
 	print('Done',count)
 
 def main():
@@ -445,9 +443,9 @@ def main():
 	# run_phyloscanner(50)
 	# run_phyloscanner_multithreaded(50)
 	# run_tnet_old_multithreaded()
-	# run_tnet_new_multithreaded()
+	run_tnet_new_multithreaded()
 	# create_tnet_bootstrap_output(50)
-	create_directed_tnet_bootstrap_summary('tnet_new_10_bootstrap', 100)
+	# create_directed_tnet_bootstrap_summary('tnet_new_10_bootstrap', 100)
 	# check_and_clean()
 
 

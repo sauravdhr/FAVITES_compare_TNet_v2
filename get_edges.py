@@ -24,14 +24,14 @@ def get_phyloscanner_single_tree_edges(phylo_file):
 	f.close()
 	return phyloscanner_edges
 
-def get_phyloscanner_trans_edges(phylo_file, cutoff):
+def get_phyloscanner_summary_trans_edges(phylo_file, cutoff):
 	phyloscanner_edges = []
 	f = open(phylo_file)
 	f.readline()
 	for line in f.readlines():
 		parts = line.rstrip().split(',')
 		# print(parts)
-		if parts[2] == 'trans' and int(parts[3]) > cutoff:
+		if parts[2] == 'trans' and int(parts[3]) >= cutoff:
 			phyloscanner_edges.append(parts[0]+'->'+parts[1])
 		# print(parts)
 
@@ -62,7 +62,7 @@ def get_phyloscanner_multi_tree_edges_with_complex(phylo_file, cutoff):
 
 	f.close()
 	for x, y in edge_dict.items():
-		if y > cutoff: phyloscanner_edges.append(x)
+		if y >= cutoff: phyloscanner_edges.append(x)
 
 	return phyloscanner_edges
 
@@ -92,12 +92,12 @@ def get_mul_tnet_edges(tnet_file, cutoff):
 	return tnet_edges
 
 
-def get_tnet_multiple_tree_edges(tnet_file, cutoff):
+def get_tnet_summary_edges(tnet_file, cutoff):
 	tnet_edges = []
 	f = open(tnet_file)
 	for line in f.readlines():
-		parts = line.rstrip().split('\t')
-		if int(parts[1]) > cutoff and not parts[0].startswith('None'):
+		parts = line.rstrip().split(',')
+		if int(parts[1]) >= cutoff:
 			tnet_edges.append(parts[0])
 
 	f.close()
