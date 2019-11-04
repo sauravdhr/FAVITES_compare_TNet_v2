@@ -8,7 +8,7 @@ def check_progress():
 
 	for folder in folders:
 		# print(folder)
-		check_folder = 'outputs/' + folder + '/tnet_new_100_bootstrap'
+		check_folder = 'outputs/' + folder + '/tnet_new_50_bootstrap'
 		# RAxML_bestTree = data_dir + folder + '/RAxML_output/RAxML_bestTree.favites'
 		# check_folder = 'outputs/' + folder + '/tnet_best_tree/bestTree.100.tnet_new'
 		# check_folder = data_dir + folder + '/RAxML_output/'
@@ -19,11 +19,13 @@ def check_progress():
 			# check_file = 'outputs/' + folder + '/phyloscanner_output_50_bootstrap/favites_hostRelationshipSummary.csv'
 			# count += 1
 			count += len(file_list)
+			if len(file_list)==0:
+				print(folder)
 		else:
 			print(folder)
 		# break
 
-	print('Progress:', count, 'out of', total*100)
+	print('Progress:', count, 'out of', total*50)
 
 
 def main():

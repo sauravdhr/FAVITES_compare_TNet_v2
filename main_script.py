@@ -371,7 +371,7 @@ def create_tnet_bootstrap_output(bootstrap):
 			print('Invalid bootstrap value')
 			return
 
-		input_folder = 'outputs/' + folder + '/tnet_new_100_times/'
+		input_folder = 'outputs/' + folder + '/tnet_new_100_bootstrap/'
 		output_folder = 'outputs/' + folder + '/tnet_new_' + str(bootstrap) + '_bootstrap'
 		file_list = next(os.walk(phylo_bootstrap_folder))[2]
 		if not os.path.exists(output_folder):
@@ -396,7 +396,7 @@ def create_directed_tnet_bootstrap_summary(tree_folder, threshold):
 		if not os.path.exists(output_folder):
 			os.mkdir(output_folder)
 
-		if not os.path.exists(output_folder + tree_folder + '_th_' + str(threshold) + '_summary.csv')
+		if not os.path.exists(output_folder + tree_folder + '_th_' + str(threshold) + '_summary.csv'):
 			result = open(output_folder + tree_folder + '_th_' + str(threshold) + '_summary.csv', 'w+')
 			file_list = next(os.walk(bootstrap_folder))[2]
 
@@ -445,8 +445,8 @@ def main():
 	# run_phyloscanner_multithreaded(50)
 	# run_tnet_old_multithreaded()
 	# run_tnet_new_multithreaded()
+	# create_tnet_bootstrap_output(10)
 	create_tnet_bootstrap_output(50)
-	# create_tnet_bootstrap_output(50)
 	# create_directed_tnet_bootstrap_summary('tnet_new_10_bootstrap', 100)
 	# check_and_clean()
 
