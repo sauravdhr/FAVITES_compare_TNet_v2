@@ -68,11 +68,32 @@ def compare_phyloscanner_tnet(bootstrap, threshold):
 
 	F1_file.close()
 
+def compare_phyloscanner_tnet_best_tree(threshold):
+	data_dir = 'outputs/'
+	folders = next(os.walk(data_dir))[1]
+	folders.sort()
 
+	F1_file = open('results/best_tree.phyloscanner.tnet.new.th.'+str(threshold)+'.csv', 'w+')
+	F1_file.write('dataset,phylo_prec,phylo_rec,phylo_f1,tnet_prec,tnet_rec,tnet_f1\n')
+
+	for folder in folders:
+		print('inside folder: ',folder)
+		F1 = []
+
+		real = set(ge.get_real_edges('dataset/' + folder + '/transmission_network.txt'))
+		phylo = set(ge.get_phyloscanner_single_tree_edges(data_dir + folder + '/phyloscanner_best_tree/favites_collapsedTree.csv'))
+		tnet = set(ge.get_mul_tnet_edges(data_dir + folder + '/tnet_best_tree/bestTree.100.tnet_new', threshold))
+
+		F1.extend(get_prec_rec_f1(real, phylo))
+		F1.extend(get_prec_rec_f1(real, tnet))
+		F1_file.write('{},{},{},{},{},{},{}\n'.format(folder,F1[0],F1[1],F1[2],F1[3],F1[4],F1[5]))
+
+	F1_file.close()
 
 def main():
 	# compare_tnet_best_tree()
-	compare_phyloscanner_tnet(10,50)
+	# compare_phyloscanner_tnet(10,50)
+	compare_phyloscanner_tnet_best_tree(100)
 
 	
 

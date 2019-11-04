@@ -396,21 +396,22 @@ def create_directed_tnet_bootstrap_summary(tree_folder, threshold):
 		if not os.path.exists(output_folder):
 			os.mkdir(output_folder)
 
-		result = open(output_folder + tree_folder + '_th_' + str(threshold) + '_summary.csv', 'w+')
-		file_list = next(os.walk(bootstrap_folder))[2]
+		if not os.path.exists(output_folder + tree_folder + '_th_' + str(threshold) + '_summary.csv')
+			result = open(output_folder + tree_folder + '_th_' + str(threshold) + '_summary.csv', 'w+')
+			file_list = next(os.walk(bootstrap_folder))[2]
 
-		for file in file_list:
-			tnet_file = bootstrap_folder + '/' + file
-			tnet_edges = ge.get_mul_tnet_edges(tnet_file, threshold)
-			for edge in tnet_edges:
-				if edge in edge_dict:
-					edge_dict[edge] += 1
-				else:
-					edge_dict[edge] = 1
+			for file in file_list:
+				tnet_file = bootstrap_folder + '/' + file
+				tnet_edges = ge.get_mul_tnet_edges(tnet_file, threshold)
+				for edge in tnet_edges:
+					if edge in edge_dict:
+						edge_dict[edge] += 1
+					else:
+						edge_dict[edge] = 1
 
-		edge_dict = dict(sorted(edge_dict.items(), key=operator.itemgetter(1),reverse=True))
-		for x, y in edge_dict.items():
-			result.write('{},{}\n'.format(x, y))
+			edge_dict = dict(sorted(edge_dict.items(), key=operator.itemgetter(1),reverse=True))
+			for x, y in edge_dict.items():
+				result.write('{},{}\n'.format(x, y))
 
 def check_and_clean():
 	data_dir = 'dataset/'
@@ -443,8 +444,8 @@ def main():
 	# run_phyloscanner(50)
 	# run_phyloscanner_multithreaded(50)
 	# run_tnet_old_multithreaded()
-	run_tnet_new_multithreaded()
-	# create_tnet_bootstrap_output(50)
+	# run_tnet_new_multithreaded()
+	create_tnet_bootstrap_output(50)
 	# create_directed_tnet_bootstrap_summary('tnet_new_10_bootstrap', 100)
 	# check_and_clean()
 
