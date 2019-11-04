@@ -413,6 +413,39 @@ def create_directed_tnet_bootstrap_summary(tree_folder, threshold):
 			for x, y in edge_dict.items():
 				result.write('{},{}\n'.format(x, y))
 
+def create_undirected_tnet_bootstrap_summary(tree_folder, threshold):
+	data_dir = 'outputs/'
+	folders = next(os.walk(data_dir))[1]
+
+	for folder in folders:
+		print('Inside',folder)
+		edge_dict = {}
+		bootstrap_folder = data_dir + folder + '/' + tree_folder
+		output_folder = data_dir + folder + '/tnet_new_bootstrap_summary_undirected/'
+		if not os.path.exists(output_folder):
+			os.mkdir(output_folder)
+
+		if not os.path.exists(output_folder + tree_folder + '_th_' + str(threshold) + '_summary.csv'):
+			result = open(output_folder + tree_folder + '_th_' + str(threshold) + '_summary.csv', 'w+')
+			file_list = next(os.walk(bootstrap_folder))[2]
+
+			for file in file_list:
+				tnet_file = bootstrap_folder + '/' + file
+				tnet_edges = ge.get_mul_tnet_undirected_edges(tnet_file, threshold)
+				for edge in tnet_edges:
+					parts_edge = edge.rstrip().split('->')
+					rev_edge = parts_edge[1]+ '->' +parts_edge[0]
+					if edge in edge_dict:
+						edge_dict[edge] += 1
+					elif rev_edge in edge_dict:
+						edge_dict[rev_edge] += 1
+					else:
+						edge_dict[edge] = 1
+
+			edge_dict = dict(sorted(edge_dict.items(), key=operator.itemgetter(1),reverse=True))
+			for x, y in edge_dict.items():
+				result.write('{},{}\n'.format(x, y))
+
 def check_and_clean():
 	data_dir = 'dataset/'
 	folders = next(os.walk(data_dir))[1]
@@ -447,7 +480,8 @@ def main():
 	# run_tnet_new_multithreaded()
 	# create_tnet_bootstrap_output(10)
 	# create_tnet_bootstrap_output(50)
-	create_directed_tnet_bootstrap_summary('tnet_new_10_bootstrap', 50)
+	# create_directed_tnet_bootstrap_summary('tnet_new_100_bootstrap', 80)
+	create_undirected_tnet_bootstrap_summary('tnet_new_50_bootstrap', 80)
 	# check_and_clean()
 
 

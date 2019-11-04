@@ -1,3 +1,5 @@
+import operator
+
 def get_real_edges(real_file):
 	real_edges = []
 	f = open(real_file)
@@ -39,7 +41,7 @@ def get_phyloscanner_summary_trans_edges(phylo_file, cutoff):
 	return phyloscanner_edges
 
 
-def get_phyloscanner_multi_tree_edges_with_complex(phylo_file, cutoff):
+def get_phyloscanner_summary_edges_with_complex(phylo_file, cutoff):
 	phyloscanner_edges = []
 	edge_dict = {}
 	f = open(phylo_file)
@@ -57,7 +59,7 @@ def get_phyloscanner_multi_tree_edges_with_complex(phylo_file, cutoff):
 			rev_edge = parts[1]+'->'+parts[0]
 			if edge in edge_dict:
 				edge_dict[edge] += int(parts[3])
-			elif rev_edge in edge_dict:
+			if rev_edge in edge_dict:
 				edge_dict[rev_edge] += int(parts[3])
 
 	f.close()
@@ -78,7 +80,6 @@ def get_tnet_single_tree_edges(tnet_file):
 	f.close()
 	return tnet_edges
 
-
 def get_mul_tnet_edges(tnet_file, cutoff):
 	tnet_edges = []
 	f = open(tnet_file)
@@ -91,6 +92,28 @@ def get_mul_tnet_edges(tnet_file, cutoff):
 	f.close()
 	return tnet_edges
 
+def get_mul_tnet_undirected_edges(tnet_file, cutoff):
+	tnet_edges = []
+	edge_dict = {}
+	f = open(tnet_file)
+	for line in f.readlines():
+		parts = line.rstrip().split('\t')
+		edge = parts[0]
+		parts_edge = edge.rstrip().split('->')
+		rev_edge = parts_edge[1]+ '->' +parts_edge[0]
+		if edge in edge_dict:
+			edge_dict[edge] += int(parts[1])
+		elif rev_edge in edge_dict:
+			edge_dict[rev_edge] += int(parts[1])
+		else:
+			edge_dict[edge] = int(parts[1])
+	
+	f.close()
+	edge_dict = dict(sorted(edge_dict.items(), key=operator.itemgetter(1),reverse=True))
+	for x, y in edge_dict.items():
+		if y >= cutoff: tnet_edges.append(x)
+	
+	return tnet_edges
 
 def get_tnet_summary_edges(tnet_file, cutoff):
 	tnet_edges = []
@@ -102,3 +125,33 @@ def get_tnet_summary_edges(tnet_file, cutoff):
 
 	f.close()
 	return tnet_edges
+
+def combine_direction(edge_set):
+	one_direction = set(edge_set)
+	for edge in edge_set:
+		parts_edge = edge.rstrip().split('->')
+		rev_edge = parts_edge[1]+ '->' +parts_edge[0]
+		if edge in one_direction and rev_edge in one_direction:
+			one_direction.remove(rev_edge)
+
+	return one_direction
+
+def intersection(a,b):
+	intersection = []
+	for edge in a:
+		parts_edge = edge.rstrip().split('->')
+		rev_edge = parts_edge[1]+ '->' +parts_edge[0]
+		if edge in b or rev_edge in b:
+			intersection.append(edge)
+
+	return set(intersection)
+
+def minus(a,b):
+	minus = set(a)
+	for edge in a:
+		parts_edge = edge.rstrip().split('->')
+		rev_edge = parts_edge[1]+ '->' +parts_edge[0]
+		if edge in b or rev_edge in b:
+			minus.remove(edge)
+
+	return minus

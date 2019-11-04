@@ -1,0 +1,13 @@
+unique.split,parent.split,host,parent.host
+45-SPLIT1,unassigned_region-SPLIT1,45,unassigned_region
+20,45-SPLIT3,20,45
+45-SPLIT2,20,45,20
+45-SPLIT3,8-SPLIT4,45,8
+8-SPLIT4,unassigned_region-SPLIT1,8,unassigned_region
+45-SPLIT4,8-SPLIT4,45,8
+8-SPLIT1,45-SPLIT4,8,45
+45-SPLIT5,8-SPLIT4,45,8
+8-SPLIT2,45-SPLIT5,8,45
+8-SPLIT3,45-SPLIT5,8,45
+45-SPLIT6,8-SPLIT4,45,8
+unassigned_region-SPLIT1,root,unassigned_region,root
