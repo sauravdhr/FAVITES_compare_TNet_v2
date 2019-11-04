@@ -426,10 +426,10 @@ def check_and_clean():
 			check_file = check_folder + file_list[0]
 			if os.stat(check_file).st_size == 0:
 				print(folder)
-				shutil.rmtree('outputs/' + folder + '/tnet_new_100_bootstrap')
-				shutil.rmtree('outputs/' + folder + '/tnet_new_50_bootstrap')
-				shutil.rmtree('outputs/' + folder + '/tnet_new_10_bootstrap')
-				shutil.rmtree('outputs/' + folder + '/tnet_new_bootstrap_summary_directed')
+				# shutil.rmtree('outputs/' + folder + '/tnet_new_100_bootstrap')
+				# shutil.rmtree('outputs/' + folder + '/tnet_new_50_bootstrap')
+				# shutil.rmtree('outputs/' + folder + '/tnet_new_10_bootstrap')
+				# shutil.rmtree('outputs/' + folder + '/tnet_new_bootstrap_summary_directed')
 				# break
 	print('Done',count)
 
@@ -446,6 +446,7 @@ def main():
 	# run_tnet_old_multithreaded()
 	# run_tnet_new_multithreaded()
 	create_tnet_bootstrap_output(50)
+	# create_tnet_bootstrap_output(50)
 	# create_directed_tnet_bootstrap_summary('tnet_new_10_bootstrap', 100)
 	# check_and_clean()
 
