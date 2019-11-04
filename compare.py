@@ -92,8 +92,8 @@ def compare_phyloscanner_tnet_best_tree(threshold):
 
 def main():
 	# compare_tnet_best_tree()
-	# compare_phyloscanner_tnet(10,50)
-	compare_phyloscanner_tnet_best_tree(100)
+	compare_phyloscanner_tnet(50,100)
+	# compare_phyloscanner_tnet_best_tree(100)
 
 	
 

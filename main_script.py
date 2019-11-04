@@ -446,8 +446,8 @@ def main():
 	# run_tnet_old_multithreaded()
 	# run_tnet_new_multithreaded()
 	# create_tnet_bootstrap_output(10)
-	create_tnet_bootstrap_output(50)
-	# create_directed_tnet_bootstrap_summary('tnet_new_10_bootstrap', 100)
+	# create_tnet_bootstrap_output(50)
+	create_directed_tnet_bootstrap_summary('tnet_new_10_bootstrap', 50)
 	# check_and_clean()
 
 
