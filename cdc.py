@@ -20,70 +20,79 @@ def run_new_tnet_cdc_multithreaded(times = 100):
 			os.mkdir(output_folder)
 			ms.run_tnet_new_single_folder(input_folder, output_folder, times)
 
-def create_cdc_tnet_summary(th=50):
+def create_cdc_tnet_summary_directed(threshold):
 	for outbreak in known_outbreaks:
-		input_folder = 'CDC/'+outbreak+'/tnet_output'
-		output_folder = 'CDC/'+outbreak
+		print('Inside', outbreak)
+		input_folder = 'CDC/' + outbreak + '/tnet_new_bootstrap'
+		output_folder = 'CDC/' + outbreak + '/tnet_new_bootstrap_summary_directed'
+		if not os.path.exists(output_folder):
+			os.mkdir(output_folder)
 		edge_dict = {}
-		result = open(output_folder+'/tnet.summary.'+ str(th), 'w+')
+		result = open(output_folder + '/tnet_new_bootstrap' + '_th_' + str(threshold) + '_summary.csv', 'w+')
+		file_list = next(os.walk(input_folder))[2]
 
-		tnet_list = next(os.walk(input_folder))[2]
-		for tnet in tnet_list:
-			input_file = input_folder+'/'+ tnet
-			f = open(input_file)
-			for line in f.readlines():
-				parts = line.rstrip().split('\t')
-				edge = parts[0]
-				# print(parts)
-				if int(parts[1]) < th: continue
+		for file in file_list:
+			tnet_file = output_folder + '/' + file
+			tnet_edges = ge.get_mul_tnet_edges(tnet_file, threshold)
+			for edge in tnet_edges:
 				if edge in edge_dict:
 					edge_dict[edge] += 1
 				else:
 					edge_dict[edge] = 1
 
-			f.close()
-
 		edge_dict = dict(sorted(edge_dict.items(), key=operator.itemgetter(1),reverse=True))
-
 		for x, y in edge_dict.items():
-			result.write('{}\t{}\n'.format(x, y))
+			result.write('{},{}\n'.format(x, y))
 
-		result.close()
-
-def create_cdc_tnet_summary_undirected(th=50):
+def create_cdc_tnet_summary_undirected(threshold):
 	for outbreak in known_outbreaks:
-		input_folder = 'CDC/'+outbreak+'/tnet_output_undirected'
-		output_folder = 'CDC/'+outbreak
+		print('Inside', outbreak)
+		input_folder = 'CDC/' + outbreak + '/tnet_new_bootstrap'
+		output_folder = 'CDC/' + outbreak + '/tnet_new_bootstrap_summary_undirected'
+		if not os.path.exists(output_folder):
+			os.mkdir(output_folder)
 		edge_dict = {}
-		result = open(output_folder+'/tnet.summary.undirected.'+ str(th), 'w+')
+		result = open(output_folder + '/tnet_new_bootstrap'+ '_th_' + str(threshold) + '_summary.csv', 'w+')
+		file_list = next(os.walk(input_folder))[2]
 
-		tnet_list = next(os.walk(input_folder))[2]
-		for tnet in tnet_list:
-			input_file = input_folder+'/'+ tnet
-			f = open(input_file)
-			for line in f.readlines():
-				parts = line.rstrip().split('\t')
-				edge = parts[0]
-				# print(parts)
-				if int(parts[1]) < th: continue
+		for file in file_list:
+			tnet_file = bootstrap_folder + '/' + file
+			tnet_edges = ge.get_mul_tnet_undirected_edges(tnet_file, threshold)
+			for edge in tnet_edges:
+				parts_edge = edge.rstrip().split('->')
+				rev_edge = parts_edge[1]+ '->' +parts_edge[0]
 				if edge in edge_dict:
 					edge_dict[edge] += 1
+				elif rev_edge in edge_dict:
+					edge_dict[rev_edge] += 1
 				else:
 					edge_dict[edge] = 1
 
-			f.close()
-
 		edge_dict = dict(sorted(edge_dict.items(), key=operator.itemgetter(1),reverse=True))
-
 		for x, y in edge_dict.items():
-			result.write('{}\t{}\n'.format(x, y))
+			result.write('{},{}\n'.format(x, y))
 
-		result.close()
+def check_and_clean():
+	count = 0
+	total = len(known_outbreaks)
+	for outbreak in known_outbreaks:
+		check_folder = 'CDC/'+outbreak+'/phyloscanner_output'
+		if os.path.exists(check_folder):
+			file_list = next(os.walk(check_folder))[2]
+			count += len(file_list)
+			for file in file_list:
+				if file.startswith('cdc_collapsedTree') or file.endswith('pdf'):
+					print(file)
+					os.remove(check_folder + '/' + file)
+
+	print('Progress:', count, 'out of', total*56)
+
 
 def main():
-	run_new_tnet_cdc_multithreaded()
-	# create_cdc_tnet_summary(80)
-	# create_cdc_tnet_summary_undirected(80)
+	# run_new_tnet_cdc_multithreaded()
+	create_cdc_tnet_summary_directed(50)
+	create_cdc_tnet_summary_undirected(80)
+	# check_and_clean()
 
 
 if __name__ == "__main__": main()
