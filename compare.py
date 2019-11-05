@@ -185,10 +185,10 @@ def partition_result():
 
 
 def main():
-	compare_tnet_best_tree()
+	# compare_tnet_best_tree()
 	# compare_phyloscanner_tnet_best_tree(100)
-	# compare_phyloscanner_tnet_directed(100,80)
-	# compare_phyloscanner_tnet_undirected(50,50)
+	compare_phyloscanner_tnet_directed(100, 30)
+	compare_phyloscanner_tnet_undirected(100, 30)
 	# compare_cdc_directed(100)
 	# compare_cdc_undirected(80)
 	# partition_result()
