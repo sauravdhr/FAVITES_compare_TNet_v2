@@ -50,21 +50,23 @@ def compare_tnet_best_tree():
 	folders.sort()
 
 	thresholds = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-	F1_file = open('results/single_tree_tnet_100_run/best_tree.recall.tnet.old.csv', 'w+')
-	F1_file.write('dataset,10,20,30,40,50,60,70,80,90,100\n')
+	F1_file = open('results/single_tree_tnet/best_tree.recall.tnet.new.csv', 'w+')
+	F1_file.write('dataset,single,10,20,30,40,50,60,70,80,90,100\n')
 
 	for folder in folders:
 		print('inside folder: ',folder)
+		real = set(ge.get_real_edges('dataset/' + folder + '/transmission_network.txt'))
+		tnet_single = set(ge.get_mul_tnet_edges(data_dir + folder + '/tnet_best_tree/bestTree.1.tnet_new', 0))
+		single_run = get_prec_rec_f1(real, tnet_single)[1]
 
 		F1 = []
 		for th in thresholds:
-			real = set(ge.get_real_edges('dataset/' + folder + '/transmission_network.txt'))
-			tnet = set(ge.get_mul_tnet_edges(data_dir + folder + '/tnet_best_tree/bestTree.100.tnet_old', th))
+			tnet = set(ge.get_mul_tnet_edges(data_dir + folder + '/tnet_best_tree/bestTree.100.tnet_new', th))
 
 			temp = get_prec_rec_f1(real, tnet)
 			F1.append(temp[1])
 
-		F1_file.write('{},{},{},{},{},{},{},{},{},{},{}\n'.format(folder,F1[0],F1[1],F1[2],F1[3],F1[4],F1[5]
+		F1_file.write('{},{},{},{},{},{},{},{},{},{},{},{}\n'.format(folder,single_run,F1[0],F1[1],F1[2],F1[3],F1[4],F1[5]
 						,F1[6],F1[7],F1[8],F1[9]))
 
 
@@ -185,10 +187,10 @@ def partition_result():
 
 
 def main():
-	# compare_tnet_best_tree()
+	compare_tnet_best_tree()
 	# compare_phyloscanner_tnet_best_tree(100)
-	compare_phyloscanner_tnet_directed(100, 30)
-	compare_phyloscanner_tnet_undirected(100, 30)
+	# compare_phyloscanner_tnet_directed(100, 30)
+	# compare_phyloscanner_tnet_undirected(100, 30)
 	# compare_cdc_directed(100)
 	# compare_cdc_undirected(80)
 	# partition_result()

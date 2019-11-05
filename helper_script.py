@@ -123,6 +123,44 @@ def run_tnet_old_besttree(times = 100):
 		out_file = output_dir + '/bestTree.' + str(times) +'.tnet_old'
 		ms.run_tnet_old_multiple_times(tree_file, out_file, times)
 
+def print_data_summary_():
+	data_dir = 'dataset/'
+	min_leaves_count = 999999
+	max_leaves_count = -1
+	total_leaves_count = 0
+
+	min_hosts_count = 999999
+	max_hosts_count = -1
+	total_hosts_count = 0
+
+	folders = next(os.walk(data_dir))[1]
+	for folder in folders:
+		print(folder)
+		records = list(SeqIO.parse(data_dir + folder +'/sequences.fasta', 'fasta'))
+
+		leaves = []
+		for seq in records:
+			leaves.append(seq.id.split('_')[0])
+
+		min_leaves_count = min(min_leaves_count, len(leaves))
+		max_leaves_count = max(min_leaves_count, len(leaves))
+		total_leaves_count += len(leaves)
+
+		hosts = list(set(leaves))
+		min_hosts_count = min(min_hosts_count, len(hosts))
+		max_hosts_count = max(max_hosts_count, len(hosts))
+		total_hosts_count += len(hosts)
+
+	print('min_leaves_count', min_leaves_count)
+	print('max_leaves_count', max_leaves_count)
+	print('avg_leaves_count', total_leaves_count/len(folders))
+
+	print('min_hosts_count', min_hosts_count)
+	print('max_hosts_count', max_hosts_count)
+	print('avg_hosts_count', total_hosts_count/len(folders))
+
+
+
 def run_phyloscanner_besttree():
 	data_dir = 'dataset/'
 	folders = next(os.walk(data_dir))[1]
@@ -144,9 +182,10 @@ def main():
 	# create_raxml_scripts_with_bootstrap(100, 'raxml_scripts')
 	# run_raxml_scripts_with_threading('raxml_scripts')
 	# root_raxml_best_tree()
-	# run_tnet_new_besttree_multithreaded()
-	# run_tnet_old_besttree()
-	run_phyloscanner_besttree()
+	# run_tnet_new_besttree_multithreaded(1)
+	# run_tnet_old_besttree(1)
+	# run_phyloscanner_besttree()
+	print_data_summary_()
 
 	
 
