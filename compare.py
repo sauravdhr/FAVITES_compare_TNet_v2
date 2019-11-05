@@ -49,9 +49,9 @@ def compare_tnet_best_tree():
 	folders = next(os.walk(data_dir))[1]
 	folders.sort()
 
-	thresholds = [50, 60, 70, 80, 90, 100]
-	F1_file = open('results/best_tree.recall.tnet.old.csv', 'w+')
-	F1_file.write('dataset,50,60,70,80,90,100\n')
+	thresholds = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+	F1_file = open('results/single_tree_tnet_100_run/best_tree.recall.tnet.old.csv', 'w+')
+	F1_file.write('dataset,10,20,30,40,50,60,70,80,90,100\n')
 
 	for folder in folders:
 		print('inside folder: ',folder)
@@ -64,8 +64,8 @@ def compare_tnet_best_tree():
 			temp = get_prec_rec_f1(real, tnet)
 			F1.append(temp[1])
 
-		F1_file.write('{},{},{},{},{},{},{}\n'.format(folder,F1[0],F1[1],F1[2],F1[3],F1[4],F1[5]))
-						# ,F1[6],F1[7],F1[8],F1[9],F1[10],F1[11],F1[12],F1[13],F1[14],F1[15],F1[16],F1[17]))
+		F1_file.write('{},{},{},{},{},{},{},{},{},{},{}\n'.format(folder,F1[0],F1[1],F1[2],F1[3],F1[4],F1[5]
+						,F1[6],F1[7],F1[8],F1[9]))
 
 
 def compare_phyloscanner_tnet_directed(bootstrap, threshold):
@@ -173,11 +173,11 @@ def compare_cdc_undirected(threshold):
 def partition_result():
 	f = open('results/favites_directed_comparison/bootstrap.100.phyloscanner.tnet.new.th.50.csv')
 	# f.readline()
-	result = open('results/favites_directed_comparison/bootstrap.100.phyloscanner.tnet.new.th.50/nv5.csv', 'w+')
+	result = open('results/favites_directed_comparison/bootstrap.100.phyloscanner.tnet.new.th.50/SEIR01.csv', 'w+')
 	result.write(f.readline())
 
 	for line in f.readlines():
-		if 'nv5' in line:
+		if 'SEIR01_' in line:
 			result.write(line)
 
 	f.close()
@@ -185,13 +185,13 @@ def partition_result():
 
 
 def main():
-	# compare_tnet_best_tree()
+	compare_tnet_best_tree()
 	# compare_phyloscanner_tnet_best_tree(100)
 	# compare_phyloscanner_tnet_directed(100,80)
 	# compare_phyloscanner_tnet_undirected(50,50)
 	# compare_cdc_directed(100)
 	# compare_cdc_undirected(80)
-	partition_result()
+	# partition_result()
 
 
 
