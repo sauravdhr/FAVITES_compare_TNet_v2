@@ -170,13 +170,28 @@ def compare_cdc_undirected(threshold):
 
 	F1_file.close()
 
+def partition_result():
+	f = open('results/favites_directed_comparison/bootstrap.100.phyloscanner.tnet.new.th.50.csv')
+	# f.readline()
+	result = open('results/favites_directed_comparison/bootstrap.100.phyloscanner.tnet.new.th.50/nv5.csv', 'w+')
+	result.write(f.readline())
+
+	for line in f.readlines():
+		if 'nv5' in line:
+			result.write(line)
+
+	f.close()
+	result.close()
+
+
 def main():
 	# compare_tnet_best_tree()
 	# compare_phyloscanner_tnet_best_tree(100)
 	# compare_phyloscanner_tnet_directed(100,80)
 	# compare_phyloscanner_tnet_undirected(50,50)
 	# compare_cdc_directed(100)
-	compare_cdc_undirected(80)
+	# compare_cdc_undirected(80)
+	partition_result()
 
 
 
