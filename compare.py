@@ -187,12 +187,12 @@ def partition_result():
 
 
 def main():
-	compare_tnet_best_tree()
+	# compare_tnet_best_tree()
 	# compare_phyloscanner_tnet_best_tree(100)
 	# compare_phyloscanner_tnet_directed(100, 30)
 	# compare_phyloscanner_tnet_undirected(100, 30)
-	# compare_cdc_directed(100)
-	# compare_cdc_undirected(80)
+	compare_cdc_directed(40)
+	compare_cdc_undirected(40)
 	# partition_result()
 
 
