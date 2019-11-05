@@ -133,6 +133,50 @@ def compare_phyloscanner_tnet_best_tree(threshold):
 
 	F1_file.close()
 
+def compare_cdc_directed(threshold):
+	data_dir = 'outputs/'
+	folders = next(os.walk(data_dir))[1]
+	folders.sort()
+
+	F1_file = open('results/directed_comparison/bootstrap.'+str(bootstrap)+'.phyloscanner.tnet.new.th.'+str(threshold)+'.csv', 'w+')
+	F1_file.write('dataset,phylo_prec,phylo_rec,phylo_f1,tnet_prec,tnet_rec,tnet_f1\n')
+
+	for folder in folders:
+		print('inside folder: ',folder)
+		F1 = []
+
+		real = set(ge.get_real_edges('dataset/' + folder + '/transmission_network.txt'))
+		phylo = set(ge.get_phyloscanner_summary_trans_edges(data_dir + folder + '/phyloscanner_output_'+str(bootstrap)+'_bootstrap/favites_hostRelationshipSummary.csv', bootstrap//2))
+		tnet = set(ge.get_tnet_summary_edges(data_dir + folder + '/tnet_new_bootstrap_summary_directed/tnet_new_'+str(bootstrap)+'_bootstrap_th_'+str(threshold)+'_summary.csv', bootstrap//2))
+
+		F1.extend(get_prec_rec_f1(real, phylo))
+		F1.extend(get_prec_rec_f1(real, tnet))
+		F1_file.write('{},{},{},{},{},{},{}\n'.format(folder,F1[0],F1[1],F1[2],F1[3],F1[4],F1[5]))
+
+	F1_file.close()
+
+def compare_cdc_undirected(bootstrap, threshold):
+	data_dir = 'outputs/'
+	folders = next(os.walk(data_dir))[1]
+	folders.sort()
+
+	F1_file = open('results/undirected_comparison/bootstrap.'+str(bootstrap)+'.phyloscanner.tnet.new.th.'+str(threshold)+'.csv', 'w+')
+	F1_file.write('dataset,phylo_prec,phylo_rec,phylo_f1,tnet_prec,tnet_rec,tnet_f1\n')
+
+	for folder in folders:
+		print('inside folder: ',folder)
+		F1 = []
+
+		real = set(ge.get_real_edges('dataset/' + folder + '/transmission_network.txt'))
+		phylo = set(ge.get_phyloscanner_summary_edges_with_complex(data_dir + folder + '/phyloscanner_output_'+str(bootstrap)+'_bootstrap/favites_hostRelationshipSummary.csv', bootstrap//2))
+		tnet = set(ge.get_tnet_summary_edges(data_dir + folder + '/tnet_new_bootstrap_summary_directed/tnet_new_'+str(bootstrap)+'_bootstrap_th_'+str(threshold)+'_summary.csv', bootstrap//2))
+
+		F1.extend(get_prec_rec_f1_undirected(real, phylo))
+		F1.extend(get_prec_rec_f1_undirected(real, tnet))
+		F1_file.write('{},{},{},{},{},{},{}\n'.format(folder,F1[0],F1[1],F1[2],F1[3],F1[4],F1[5]))
+
+	F1_file.close()
+
 def main():
 	# compare_tnet_best_tree()
 	# compare_phyloscanner_tnet_best_tree(100)

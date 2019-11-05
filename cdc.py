@@ -3,6 +3,7 @@
 # We know the source of only 10 out of these outbreaks.
 
 # Library Imports
+from Bio import SeqIO
 import operator
 import shutil, os
 import get_edges as ge
@@ -12,6 +13,25 @@ import main_script as ms
 known_outbreaks = ['AA', 'AC', 'AI', 'AJ', 'AQ', 'AW', 'BA', 'BB', 'BC', 'BJ']
 sources = ['AA45','AC124','AI4','AJ199','AQ89','AW2','BA3','BB45','BC46','BJ28']
 
+def get_true_transmission_edges(outbreak):
+	seq_list = list(SeqIO.parse('CDC/'+ outbreak +'/sequences.fasta', 'fasta'))
+
+	true_edges = []
+	hosts = []
+	for seq in seq_list:
+		hosts.append(seq.id.split('_')[0])
+
+	hosts = list(set(hosts))
+	print(hosts)
+
+	source = sources[known_outbreaks.index(outbreak)]
+	source = source.replace(outbreak, '')
+	hosts.remove(source)
+
+	for host in hosts:
+		true_edges.append(source +'->'+ host)
+
+	return true_edges
 
 def run_new_tnet_cdc_multithreaded(times = 100):
 	for outbreak in known_outbreaks:
@@ -91,9 +111,10 @@ def check_and_clean():
 
 def main():
 	# run_new_tnet_cdc_multithreaded()
-	create_cdc_tnet_summary_directed(50)
-	create_cdc_tnet_summary_undirected(80)
+	# create_cdc_tnet_summary_directed(50)
+	# create_cdc_tnet_summary_undirected(80)
 	# check_and_clean()
+	print(get_true_transmission_edges('BJ'))
 
 
 if __name__ == "__main__": main()
