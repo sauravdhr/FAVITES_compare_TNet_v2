@@ -126,14 +126,15 @@ def run_tnet_old_besttree(times = 100):
 def print_data_summary_():
 	data_dir = 'dataset/'
 	min_leaves_count = 999999
-	max_leaves_count = -1
+	max_leaves_count = 0
 	total_leaves_count = 0
 
 	min_hosts_count = 999999
-	max_hosts_count = -1
+	max_hosts_count = 0
 	total_hosts_count = 0
 
 	folders = next(os.walk(data_dir))[1]
+	# folders = ['SEIR01_sl250_mr025_nv10_1']
 	for folder in folders:
 		print(folder)
 		records = list(SeqIO.parse(data_dir + folder +'/sequences.fasta', 'fasta'))
@@ -143,7 +144,7 @@ def print_data_summary_():
 			leaves.append(seq.id.split('_')[0])
 
 		min_leaves_count = min(min_leaves_count, len(leaves))
-		max_leaves_count = max(min_leaves_count, len(leaves))
+		max_leaves_count = max(max_leaves_count, len(leaves))
 		total_leaves_count += len(leaves)
 
 		hosts = list(set(leaves))

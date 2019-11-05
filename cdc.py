@@ -39,13 +39,16 @@ def run_new_tnet_cdc_multithreaded(times = 100):
 			os.mkdir(output_folder)
 			ms.run_tnet_new_single_folder(input_folder, output_folder, times)
 
-def run_new_tnet_cdc_besttree_multithreaded(times = 100):
+def run_new_tnet_cdc_single_tree_multithreaded(times = 100):
 	for outbreak in known_outbreaks:
-		input_folder = 'CDC/'+outbreak+'/tnet_input'
-		output_folder = 'CDC/'+outbreak+'/tnet_new_bootstrap'
+		input_file = 'CDC/'+outbreak+'/tnet_input/RAxML_rootedTree.25'
+		output_folder = 'CDC/'+outbreak+'/tnet_single_tree/'
 		if not os.path.exists(output_folder):
 			os.mkdir(output_folder)
-			ms.run_tnet_new_single_folder(input_folder, output_folder, times)
+		
+		output_file = output_folder + 'single_tree.' + str(times) + '.tnet_new'
+		if not os.path.exists(output_file):
+			ms.run_tnet_new_multiple_times(input_file, output_file, times)
 
 def create_cdc_tnet_summary_directed(threshold):
 	for outbreak in known_outbreaks:
@@ -116,8 +119,9 @@ def check_and_clean():
 
 def main():
 	# run_new_tnet_cdc_multithreaded()
-	create_cdc_tnet_summary_directed(40)
-	create_cdc_tnet_summary_undirected(40)
+	run_new_tnet_cdc_single_tree_multithreaded(1)
+	# create_cdc_tnet_summary_directed(40)
+	# create_cdc_tnet_summary_undirected(40)
 	# check_and_clean()
 	# get_true_transmission_edges('BJ')
 
