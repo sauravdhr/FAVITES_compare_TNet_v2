@@ -22,8 +22,6 @@ def get_true_transmission_edges(outbreak):
 		hosts.append(seq.id.split('_')[0])
 
 	hosts = list(set(hosts))
-	print(hosts)
-
 	source = sources[known_outbreaks.index(outbreak)]
 	source = source.replace(outbreak, '')
 	hosts.remove(source)
@@ -97,7 +95,7 @@ def check_and_clean():
 	count = 0
 	total = len(known_outbreaks)
 	for outbreak in known_outbreaks:
-		check_folder = 'CDC/'+outbreak+'/tnet_new_bootstrap/'
+		check_folder = 'CDC/' + outbreak + '/tnet_new_bootstrap/'
 		if os.path.exists(check_folder):
 			file_list = next(os.walk(check_folder))[2]
 			count += len(file_list)
@@ -111,9 +109,9 @@ def check_and_clean():
 def main():
 	# run_new_tnet_cdc_multithreaded()
 	# create_cdc_tnet_summary_directed(100)
-	create_cdc_tnet_summary_undirected(100)
+	create_cdc_tnet_summary_undirected(80)
 	# check_and_clean()
-	# print(get_true_transmission_edges('BJ'))
+	# get_true_transmission_edges('BJ')
 
 
 if __name__ == "__main__": main()

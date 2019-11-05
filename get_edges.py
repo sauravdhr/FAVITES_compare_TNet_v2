@@ -40,7 +40,6 @@ def get_phyloscanner_summary_trans_edges(phylo_file, cutoff):
 	f.close()
 	return phyloscanner_edges
 
-
 def get_phyloscanner_summary_edges_with_complex(phylo_file, cutoff):
 	phyloscanner_edges = []
 	edge_dict = {}
@@ -52,11 +51,14 @@ def get_phyloscanner_summary_edges_with_complex(phylo_file, cutoff):
 			edge = parts[0]+'->'+parts[1]
 			edge_dict[edge] = int(parts[3])
 
+	f = open(phylo_file)
+	f.readline()
 	for line in f.readlines():
 		parts = line.rstrip().split(',')
 		if parts[2] == 'complex':
 			edge = parts[0]+'->'+parts[1]
 			rev_edge = parts[1]+'->'+parts[0]
+			print(edge, rev_edge)
 			if edge in edge_dict:
 				edge_dict[edge] += int(parts[3])
 			if rev_edge in edge_dict:
@@ -68,6 +70,29 @@ def get_phyloscanner_summary_edges_with_complex(phylo_file, cutoff):
 
 	return phyloscanner_edges
 
+def get_phyloscanner_summary_trans_and_complex_edges(phylo_file, cutoff):
+	phyloscanner_edges = []
+	edge_dict = {}
+	f = open(phylo_file)
+	f.readline()
+	for line in f.readlines():
+		parts = line.rstrip().split(',')
+		if parts[2] == 'trans' or parts[2] == 'complex':
+			edge = parts[0]+'->'+parts[1]
+			rev_edge = parts[1]+'->'+parts[0]
+			if edge in edge_dict:
+				edge_dict[edge] += int(parts[3])
+			elif rev_edge in edge_dict:
+				edge_dict[rev_edge] += int(parts[3])
+			else:
+				edge_dict[edge] = int(parts[3])
+
+	f.close()
+	for x, y in edge_dict.items():
+		# print(x,y)
+		if y >= cutoff: phyloscanner_edges.append(x)
+
+	return phyloscanner_edges
 
 def get_tnet_single_tree_edges(tnet_file):
 	tnet_edges = []
