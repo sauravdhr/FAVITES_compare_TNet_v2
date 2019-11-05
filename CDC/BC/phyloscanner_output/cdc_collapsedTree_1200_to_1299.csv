@@ -1,5 +1,0 @@
-unique.split,parent.split,host,parent.host
-46-SPLIT1,unassigned_region-SPLIT1,46,unassigned_region
-46-SPLIT2,unassigned_region-SPLIT1,46,unassigned_region
-30,46-SPLIT2,30,46
-unassigned_region-SPLIT1,root,unassigned_region,root
