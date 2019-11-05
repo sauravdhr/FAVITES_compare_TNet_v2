@@ -53,7 +53,7 @@ def create_cdc_tnet_summary_directed(threshold):
 		file_list = next(os.walk(input_folder))[2]
 
 		for file in file_list:
-			tnet_file = output_folder + '/' + file
+			tnet_file = input_folder + '/' + file
 			tnet_edges = ge.get_mul_tnet_edges(tnet_file, threshold)
 			for edge in tnet_edges:
 				if edge in edge_dict:
@@ -77,7 +77,7 @@ def create_cdc_tnet_summary_undirected(threshold):
 		file_list = next(os.walk(input_folder))[2]
 
 		for file in file_list:
-			tnet_file = bootstrap_folder + '/' + file
+			tnet_file = input_folder + '/' + file
 			tnet_edges = ge.get_mul_tnet_undirected_edges(tnet_file, threshold)
 			for edge in tnet_edges:
 				parts_edge = edge.rstrip().split('->')
@@ -97,24 +97,23 @@ def check_and_clean():
 	count = 0
 	total = len(known_outbreaks)
 	for outbreak in known_outbreaks:
-		check_folder = 'CDC/'+outbreak+'/phyloscanner_output'
+		check_folder = 'CDC/'+outbreak+'/tnet_new_bootstrap/'
 		if os.path.exists(check_folder):
 			file_list = next(os.walk(check_folder))[2]
 			count += len(file_list)
-			for file in file_list:
-				if file.startswith('cdc_collapsedTree') or file.endswith('pdf'):
-					print(file)
-					os.remove(check_folder + '/' + file)
+			check_file = check_folder + file_list[0]
+			if os.stat(check_file).st_size == 0:
+				print(folder)
 
-	print('Progress:', count, 'out of', total*56)
+	print('Progress:', count, 'out of', total*26)
 
 
 def main():
 	# run_new_tnet_cdc_multithreaded()
-	# create_cdc_tnet_summary_directed(50)
-	# create_cdc_tnet_summary_undirected(80)
+	# create_cdc_tnet_summary_directed(100)
+	create_cdc_tnet_summary_undirected(100)
 	# check_and_clean()
-	print(get_true_transmission_edges('BJ'))
+	# print(get_true_transmission_edges('BJ'))
 
 
 if __name__ == "__main__": main()
