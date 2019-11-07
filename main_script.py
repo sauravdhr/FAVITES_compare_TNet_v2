@@ -453,18 +453,18 @@ def check_and_clean():
 
 	for folder in folders:
 		# print('Inside',folder)
-		check_folder = 'outputs/' + folder + '/tnet_new_100_bootstrap/'
+		check_folder = data_dir + folder
 		if os.path.exists(check_folder):
+			# count += 1
 			file_list = next(os.walk(check_folder))[2]
-			check_file = check_folder + file_list[0]
-			if os.stat(check_file).st_size == 0:
+			count += len(file_list)
+			check_file = check_folder + '/sequences.fasta.reduced'
+			if os.path.exists(check_file):
 				print(folder)
-				# shutil.rmtree('outputs/' + folder + '/tnet_new_100_bootstrap')
-				# shutil.rmtree('outputs/' + folder + '/tnet_new_50_bootstrap')
-				# shutil.rmtree('outputs/' + folder + '/tnet_new_10_bootstrap')
-				# shutil.rmtree('outputs/' + folder + '/tnet_new_bootstrap_summary_directed')
-				# break
-	print('Done',count)
+				os.remove(check_file)
+				# shutil.rmtree(check_folder + '/tnet_new_10_bootstrap')
+
+	print('Done',count, 'out of:', len(folders)*2)
 
 def main():
 	# get_sequences_and_network()
@@ -480,9 +480,9 @@ def main():
 	# run_tnet_new_multithreaded()
 	# create_tnet_bootstrap_output(10)
 	# create_tnet_bootstrap_output(50)
-	create_directed_tnet_bootstrap_summary('tnet_new_10_bootstrap', 30)
-	create_undirected_tnet_bootstrap_summary('tnet_new_10_bootstrap', 30)
-	# check_and_clean()
+	# create_directed_tnet_bootstrap_summary('tnet_new_10_bootstrap', 30)
+	# create_undirected_tnet_bootstrap_summary('tnet_new_10_bootstrap', 30)
+	check_and_clean()
 
 
 
